@@ -512,35 +512,47 @@
         .phase-row-3 { top: 59px; }
         .phase-row-4 { top: 86px; }
 
-        /* Combined view workload bars */
-        .workload-bar {
+        /* Combined view project bars */
+        .combined-timeline-grid {
             position: relative;
-            height: 60px;
-            border-radius: 8px;
+            min-height: 400px;
+        }
+
+        .combined-project-bar {
+            position: absolute;
+            height: 32px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            font-weight: 700;
+            padding: 0 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
             color: var(--white);
             box-shadow: var(--shadow);
             transition: all 0.3s ease;
             cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .workload-bar:hover {
-            transform: translateY(-3px);
+        .combined-project-bar:hover {
+            transform: translateY(-2px);
             box-shadow: var(--shadow-lg);
+            z-index: 10;
         }
 
-        .workload-bar.workload-0 { background: transparent; }
-        .workload-bar.workload-1 { background: linear-gradient(135deg, #a8e6cf, #7ec4a0); }
-        .workload-bar.workload-2 { background: linear-gradient(135deg, #7ec4a0, #56ab78); }
-        .workload-bar.workload-3 { background: linear-gradient(135deg, #56ab78, #1dbf73); }
-        .workload-bar.workload-4 { background: linear-gradient(135deg, #1dbf73, #19a463); }
-        .workload-bar.workload-5 { background: linear-gradient(135deg, #19a463, #148853); }
-        .workload-bar.workload-6 { background: linear-gradient(135deg, #148853, #0f6e42); }
-        .workload-bar.workload-7 { background: linear-gradient(135deg, #0f6e42, #0a5432); }
+        /* Project-specific colors */
+        .bar-embedd { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+        .bar-memory { background: linear-gradient(135deg, #f43f5e, #e11d48); }
+        .bar-website { background: linear-gradient(135deg, #14b8a6, #0d9488); }
+        .bar-ai-orchestration { background: linear-gradient(135deg, #10b981, #059669); }
+        .bar-slm { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .bar-vibe-report { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+        .bar-campaign { background: linear-gradient(135deg, #ec4899, #db2777); }
+        .bar-mich-bot { background: linear-gradient(135deg, #a855f7, #9333ea); }
+        .bar-aera { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+        .bar-agentshap { background: linear-gradient(135deg, #1dbf73, #19a463); }
 
         /* Legend */
         .phase-legend {
@@ -1438,7 +1450,7 @@
             <!-- Combined Timeline View -->
             <div class="timeline-container" id="combinedTimeline" style="display: none;">
                 <div class="timeline-header">
-                    <div class="project-name-col">Workload Overview</div>
+                    <div class="project-name-col">All Projects</div>
                     <div class="months-header">
                         <div>Aug '25</div>
                         <div>Sep '25</div>
@@ -1451,39 +1463,48 @@
                 </div>
 
                 <!-- Combined View Row -->
-                <div class="project-row" style="min-height: 120px;">
+                <div class="project-row" style="min-height: 420px; align-items: stretch;">
                     <div class="project-info">
                         <div class="project-name">
-                            <strong>Active Projects Per Month</strong>
+                            <strong>Project Timelines</strong>
                         </div>
                         <div class="project-team">
-                            <span class="team-label">Workload Intensity</span>
+                            <span class="team-label">Duration View</span>
                             <div style="font-size: 0.75rem; color: var(--gray-dark); margin-top: 5px;">
-                                Darker = More projects running
+                                Each bar shows full project duration
                             </div>
                         </div>
                     </div>
-                    <div class="timeline-grid">
-                        <!-- August: 3 projects (Embedd, Memory, SLM) -->
-                        <div class="workload-bar workload-3" title="3 projects: Embedd, Memory, SLM">3</div>
+                    <div class="timeline-grid combined-timeline-grid">
+                        <!-- Embedd: Aug (mid) - Feb (all 7 months = 100%) -->
+                        <div class="combined-project-bar bar-embedd" style="left: 7%; width: 93%; top: 10px;">Embedd</div>
 
-                        <!-- September: 2 projects (Embedd, SLM) -->
-                        <div class="workload-bar workload-2" title="2 projects: Embedd, SLM">2</div>
+                        <!-- Memory: Aug (first half) -->
+                        <div class="combined-project-bar bar-memory" style="left: 0%; width: 7%; top: 50px;">Memory</div>
 
-                        <!-- October: 2 projects (Embedd, AI Orch) -->
-                        <div class="workload-bar workload-2" title="2 projects: Embedd, AI Orch">2</div>
+                        <!-- Website: Dec - Feb (3 months) -->
+                        <div class="combined-project-bar bar-website" style="left: 57%; width: 43%; top: 90px;">Website</div>
 
-                        <!-- November: 2 projects (Embedd, AI Orch) -->
-                        <div class="workload-bar workload-2" title="2 projects: Embedd, AI Orch">2</div>
+                        <!-- AI Orchestration: Oct - Jan (4 months) -->
+                        <div class="combined-project-bar bar-ai-orchestration" style="left: 29%; width: 57%; top: 130px;">AI Orchestration</div>
 
-                        <!-- December: 5 projects (Embedd, Website, AI Orch, Vibe Report, AgentShap) -->
-                        <div class="workload-bar workload-5" title="5 projects: Embedd, Website, AI Orch, Vibe Report, AgentShap">5</div>
+                        <!-- SLM: Aug - Sep (mid) (1.5 months) -->
+                        <div class="combined-project-bar bar-slm" style="left: 0%; width: 21%; top: 170px;">SLM</div>
 
-                        <!-- January: 7 projects (Embedd, Website, AI Orch, Vibe Report, Campaign, Mich Bot, AgentShap) -->
-                        <div class="workload-bar workload-7" title="7 projects: Embedd, Website, AI Orch, Vibe Report, Campaign, Mich Bot, AgentShap">7</div>
+                        <!-- Vibe Report: Dec - Feb (3 months) -->
+                        <div class="combined-project-bar bar-vibe-report" style="left: 57%; width: 43%; top: 210px;">Vibe Report</div>
 
-                        <!-- February: 5 projects (Embedd, Website, Vibe Report, Campaign, Mich Bot, Aera) -->
-                        <div class="workload-bar workload-5" title="5 projects: Embedd, Website, Vibe Report, Campaign, Mich Bot, Aera">5</div>
+                        <!-- Report Campaign: Jan - Feb (2 months) -->
+                        <div class="combined-project-bar bar-campaign" style="left: 71%; width: 29%; top: 250px;">Report Campaign</div>
+
+                        <!-- Mich Bot: Jan - Feb (2 months) -->
+                        <div class="combined-project-bar bar-mich-bot" style="left: 71%; width: 29%; top: 290px;">Mich Bot</div>
+
+                        <!-- Aera: Feb (1 month) -->
+                        <div class="combined-project-bar bar-aera" style="left: 86%; width: 14%; top: 330px;">Aera</div>
+
+                        <!-- AgentShap: Dec - Jan (2 months) -->
+                        <div class="combined-project-bar bar-agentshap" style="left: 57%; width: 29%; top: 370px;">AgentShap</div>
                     </div>
                 </div>
             </div>
