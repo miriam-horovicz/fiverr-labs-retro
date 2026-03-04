@@ -931,7 +931,13 @@
         <div class="content">
             <!-- Controls -->
             <div class="controls">
-                <h2 style="margin: 0; font-size: 1.5rem;">Project Timeline</h2>
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <h2 style="margin: 0; font-size: 1.5rem;">Project Timeline</h2>
+                    <div class="filter-group">
+                        <button class="filter-btn view-toggle active" id="individualView">Individual Projects</button>
+                        <button class="filter-btn view-toggle" id="combinedView">Combined View</button>
+                    </div>
+                </div>
                 <div style="display: flex; flex-direction: column; gap: 15px;">
                     <div class="filter-group">
                         <strong style="font-size: 0.85rem; color: var(--gray-dark); margin-right: 10px;">Status:</strong>
@@ -974,7 +980,7 @@
             </div>
 
             <!-- Timeline -->
-            <div class="timeline-container">
+            <div class="timeline-container" id="individualTimeline">
                 <div class="timeline-header">
                     <div class="project-name-col">Project & Details</div>
                     <div class="months-header">
@@ -1397,6 +1403,88 @@
                 </div>
             </div>
 
+            <!-- Combined Timeline View -->
+            <div class="timeline-container" id="combinedTimeline" style="display: none;">
+                <div class="timeline-header">
+                    <div class="project-name-col">All Projects Combined</div>
+                    <div class="months-header">
+                        <div>Aug '25</div>
+                        <div>Sep '25</div>
+                        <div>Oct '25</div>
+                        <div>Nov '25</div>
+                        <div>Dec '25</div>
+                        <div>Jan '26</div>
+                        <div>Feb '26</div>
+                    </div>
+                </div>
+
+                <!-- Combined View Row -->
+                <div class="project-row" style="min-height: 300px;">
+                    <div class="project-info">
+                        <div class="project-name">
+                            <strong>All Projects</strong>
+                        </div>
+                        <div class="project-team">
+                            <span class="team-label">10 Total Projects</span>
+                            <div style="font-size: 0.75rem; color: var(--gray-dark); margin-top: 5px;">
+                                Showing all project phases overlaid
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-grid">
+                        <!-- August -->
+                        <div class="phase-track">
+                            <div class="phase phase-development phase-row-1" style="left: 0%; width: 50%; opacity: 0.9;" title="Embedd">Embedd</div>
+                            <div class="phase phase-development phase-row-2" style="left: 0%; width: 50%; opacity: 0.9;" title="Memory">Memory</div>
+                            <div class="phase phase-development phase-row-3" style="left: 0%; width: 100%; opacity: 0.9;" title="SLM">SLM</div>
+                        </div>
+                        <!-- September -->
+                        <div class="phase-track">
+                            <div class="phase phase-development phase-row-1" style="left: 0%; width: 100%; opacity: 0.9;" title="Embedd">Embedd</div>
+                            <div class="phase phase-development phase-row-3" style="left: 0%; width: 50%; opacity: 0.9;" title="SLM">SLM</div>
+                        </div>
+                        <!-- October -->
+                        <div class="phase-track">
+                            <div class="phase phase-development phase-row-1" style="left: 0%; width: 100%; opacity: 0.9;" title="Embedd">Embedd</div>
+                        </div>
+                        <!-- November -->
+                        <div class="phase-track">
+                            <div class="phase phase-development phase-row-1" style="left: 0%; width: 50%; opacity: 0.9;" title="Embedd">Embedd</div>
+                            <div class="phase phase-testing phase-row-2" style="left: 50%; width: 50%; opacity: 0.9;" title="Embedd">Embedd</div>
+                        </div>
+                        <!-- December -->
+                        <div class="phase-track">
+                            <div class="phase phase-testing phase-row-1" style="left: 0%; width: 100%; opacity: 0.9;" title="Embedd">Embedd</div>
+                            <div class="phase phase-development phase-row-2" style="left: 0%; width: 100%; opacity: 0.9;" title="Website">Website</div>
+                            <div class="phase phase-development phase-row-3" style="left: 0%; width: 100%; opacity: 0.9;" title="AI Orch">AI Orch</div>
+                            <div class="phase phase-development phase-row-4" style="left: 0%; width: 100%; opacity: 0.9;" title="Vibe Report">Vibe</div>
+                            <div class="phase phase-development phase-row-1" style="left: 0%; width: 100%; opacity: 0.9; top: 113px;" title="AgentShap">AgentShap</div>
+                        </div>
+                        <!-- January -->
+                        <div class="phase-track">
+                            <div class="phase phase-release phase-row-1" style="left: 0%; width: 100%; opacity: 0.9;" title="Embedd">Embedd</div>
+                            <div class="phase phase-release phase-row-2" style="left: 0%; width: 30%; opacity: 0.9;" title="Website">Website</div>
+                            <div class="phase phase-maintenance phase-row-2" style="left: 30%; width: 70%; opacity: 0.9;" title="Website">Website</div>
+                            <div class="phase phase-development phase-row-3" style="left: 0%; width: 100%; opacity: 0.9;" title="AI Orch">AI Orch</div>
+                            <div class="phase phase-development phase-row-4" style="left: 0%; width: 100%; opacity: 0.9;" title="Vibe Report">Vibe</div>
+                            <div class="phase phase-development phase-row-1" style="left: 0%; width: 100%; opacity: 0.9; top: 113px;" title="Report Campaign">Campaign</div>
+                            <div class="phase phase-development phase-row-2" style="left: 0%; width: 100%; opacity: 0.9; top: 140px;" title="Mich Bot">Mich Bot</div>
+                            <div class="phase phase-release phase-row-3" style="left: 0%; width: 100%; opacity: 0.9; top: 167px;" title="AgentShap">AgentShap</div>
+                        </div>
+                        <!-- February -->
+                        <div class="phase-track">
+                            <div class="phase phase-maintenance phase-row-1" style="left: 0%; width: 100%; opacity: 0.9;" title="Embedd">Embedd</div>
+                            <div class="phase phase-maintenance phase-row-2" style="left: 0%; width: 100%; opacity: 0.9;" title="Website">Website</div>
+                            <div class="phase phase-development phase-row-3" style="left: 0%; width: 100%; opacity: 0.9;" title="AI Orch">AI Orch</div>
+                            <div class="phase phase-testing phase-row-4" style="left: 0%; width: 100%; opacity: 0.9;" title="Vibe Report">Vibe</div>
+                            <div class="phase phase-release phase-row-1" style="left: 0%; width: 100%; opacity: 0.9; top: 113px;" title="Report Campaign">Campaign</div>
+                            <div class="phase phase-development phase-row-2" style="left: 0%; width: 100%; opacity: 0.9; top: 140px;" title="Mich Bot">Mich Bot</div>
+                            <div class="phase phase-development phase-row-3" style="left: 0%; width: 100%; opacity: 0.9; top: 167px;" title="Aera">Aera</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -1670,6 +1758,26 @@
                 modal.style.display = 'none';
             }
         }
+
+        // View toggle functionality
+        const individualViewBtn = document.getElementById('individualView');
+        const combinedViewBtn = document.getElementById('combinedView');
+        const individualTimeline = document.getElementById('individualTimeline');
+        const combinedTimeline = document.getElementById('combinedTimeline');
+
+        individualViewBtn.addEventListener('click', () => {
+            individualTimeline.style.display = 'block';
+            combinedTimeline.style.display = 'none';
+            individualViewBtn.classList.add('active');
+            combinedViewBtn.classList.remove('active');
+        });
+
+        combinedViewBtn.addEventListener('click', () => {
+            individualTimeline.style.display = 'none';
+            combinedTimeline.style.display = 'block';
+            combinedViewBtn.classList.add('active');
+            individualViewBtn.classList.remove('active');
+        });
     </script>
 </body>
 </html>
