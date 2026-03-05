@@ -1130,22 +1130,6 @@
                             <option value="tzafrir">Tzafrir</option>
                         </select>
                     </div>
-                    <div class="filter-select-wrapper">
-                        <label for="projectFilterSelect">Project:</label>
-                        <select id="projectFilterSelect" class="filter-select">
-                            <option value="all">All</option>
-                            <option value="embedd">Embedd</option>
-                            <option value="memory">Memory</option>
-                            <option value="website">Website</option>
-                            <option value="ai-orchestration">AI Orchestration</option>
-                            <option value="slm">SLM</option>
-                            <option value="vibe-report">Vibe Report</option>
-                            <option value="campaign">Campaign</option>
-                            <option value="mich-bot">Mich Bot</option>
-                            <option value="aera">Aera</option>
-                            <option value="agentshap">AgentShap</option>
-                        </select>
-                    </div>
                 </div>
             </div>
 
@@ -1691,7 +1675,6 @@
         // Filter state
         let currentStatusFilter = 'all';
         let currentPersonFilter = 'all';
-        let currentProjectFilter = 'all';
 
         const projectRows = document.querySelectorAll('.project-row');
 
@@ -1700,13 +1683,11 @@
             projectRows.forEach(row => {
                 const status = row.getAttribute('data-status');
                 const people = row.getAttribute('data-people') || '';
-                const project = row.getAttribute('data-project') || '';
 
                 let showStatus = currentStatusFilter === 'all' || status === currentStatusFilter;
                 let showPerson = currentPersonFilter === 'all' || people.includes(currentPersonFilter);
-                let showProject = currentProjectFilter === 'all' || project === currentProjectFilter;
 
-                if (showStatus && showPerson && showProject) {
+                if (showStatus && showPerson) {
                     row.classList.remove('hidden');
                 } else {
                     row.classList.add('hidden');
@@ -1725,13 +1706,6 @@
         const personFilter = document.getElementById('personFilter');
         personFilter.addEventListener('change', () => {
             currentPersonFilter = personFilter.value;
-            applyFilters();
-        });
-
-        // Project filter
-        const projectFilterSelect = document.getElementById('projectFilterSelect');
-        projectFilterSelect.addEventListener('change', () => {
-            currentProjectFilter = projectFilterSelect.value;
             applyFilters();
         });
 
