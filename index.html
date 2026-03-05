@@ -259,13 +259,7 @@
             background: var(--white);
             border: 1px solid var(--gray);
             border-radius: 8px;
-            transition: all 0.3s ease;
             align-items: flex-start;
-        }
-
-        .project-row:hover {
-            box-shadow: var(--shadow-lg);
-            transform: translateX(5px);
         }
 
         .project-row.hidden {
@@ -287,12 +281,6 @@
 
         .project-name strong {
             cursor: pointer;
-            transition: color 0.3s ease;
-        }
-
-        .project-name strong:hover {
-            color: var(--primary);
-            text-decoration: underline;
         }
 
         .project-details {
@@ -336,13 +324,6 @@
             font-weight: 600;
             color: var(--white);
             box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .team-member-badge:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
         }
 
         .avatar {
@@ -469,18 +450,11 @@
             font-weight: 600;
             color: var(--white);
             box-shadow: var(--shadow);
-            transition: all 0.3s ease;
             cursor: pointer;
             padding: 0 8px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-        }
-
-        .phase:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-            z-index: 10;
         }
 
         /* Phase types */
@@ -539,17 +513,10 @@
             font-weight: 600;
             color: var(--white);
             box-shadow: var(--shadow);
-            transition: all 0.3s ease;
             cursor: pointer;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-        }
-
-        .combined-project-bar:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-            z-index: 10;
         }
 
         /* Project-specific colors */
@@ -656,8 +623,6 @@
             box-shadow: 0 4px 15px rgba(29, 191, 115, 0.4);
             position: relative;
             z-index: 3;
-            transition: all 0.4s ease;
-            cursor: pointer;
         }
 
         .milestone-dot::before {
@@ -670,17 +635,6 @@
             height: 12px;
             background: var(--white);
             border-radius: 50%;
-            transition: all 0.3s ease;
-        }
-
-        .milestone:hover .milestone-dot {
-            transform: scale(1.4);
-            box-shadow: 0 6px 20px rgba(29, 191, 115, 0.6);
-        }
-
-        .milestone:hover .milestone-dot::before {
-            width: 16px;
-            height: 16px;
         }
 
         .milestone-card {
@@ -689,15 +643,8 @@
             padding: 15px 18px;
             border-radius: 12px;
             box-shadow: var(--shadow);
-            transition: all 0.3s ease;
             border-left: 4px solid var(--primary);
             max-width: 200px;
-        }
-
-        .milestone:hover .milestone-card {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-            border-left-width: 6px;
         }
 
         .milestone-date {
@@ -919,14 +866,7 @@
             border-radius: 12px;
             box-shadow: var(--shadow);
             border-left: 5px solid var(--warning);
-            transition: all 0.3s ease;
             cursor: pointer;
-        }
-
-        .idea-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-            border-left-width: 8px;
         }
 
         .idea-card-title {
