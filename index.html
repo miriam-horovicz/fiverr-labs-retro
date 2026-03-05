@@ -993,6 +993,43 @@
         .tab-content.active {
             display: block;
         }
+
+        /* Filter Select Styles */
+        .filter-select-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-select-wrapper label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--gray-dark);
+            white-space: nowrap;
+        }
+
+        .filter-select {
+            padding: 8px 16px;
+            border: 2px solid var(--gray);
+            background: var(--white);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--secondary);
+            transition: all 0.3s ease;
+            min-width: 150px;
+        }
+
+        .filter-select:hover {
+            border-color: var(--primary);
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(29, 191, 115, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -1114,50 +1151,56 @@
             <div class="tab-content active" id="projectsContent">
             <!-- Controls -->
             <div class="controls">
-                <div style="display: flex; align-items: center; gap: 20px;">
+                <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
                     <h2 style="margin: 0; font-size: 1.5rem;">Project Timeline</h2>
                     <div class="filter-group">
                         <button class="filter-btn view-toggle active" id="individualView">Individual Projects</button>
                         <button class="filter-btn view-toggle" id="combinedView">Combined View</button>
                     </div>
                 </div>
-                <div style="display: flex; flex-direction: column; gap: 15px;">
-                    <div class="filter-group">
-                        <strong style="font-size: 0.85rem; color: var(--gray-dark); margin-right: 10px;">Status:</strong>
-                        <button class="filter-btn status-filter active" data-filter="all">All</button>
-                        <button class="filter-btn status-filter" data-filter="development">Development</button>
-                        <button class="filter-btn status-filter" data-filter="testing">Testing</button>
-                        <button class="filter-btn status-filter" data-filter="release">Release</button>
-                        <button class="filter-btn status-filter" data-filter="maintenance">Maintenance</button>
-                        <button class="filter-btn status-filter" data-filter="paused">Paused</button>
-                        <button class="filter-btn status-filter" data-filter="completed">Completed</button>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
+                    <div class="filter-select-wrapper">
+                        <label for="statusFilter">Status:</label>
+                        <select id="statusFilter" class="filter-select">
+                            <option value="all">All</option>
+                            <option value="development">Development</option>
+                            <option value="testing">Testing</option>
+                            <option value="release">Release</option>
+                            <option value="maintenance">Maintenance</option>
+                            <option value="paused">Paused</option>
+                            <option value="completed">Completed</option>
+                        </select>
                     </div>
-                    <div class="filter-group">
-                        <strong style="font-size: 0.85rem; color: var(--gray-dark); margin-right: 10px;">Team Member:</strong>
-                        <button class="filter-btn people-filter active" data-person="all">All</button>
-                        <button class="filter-btn people-filter" data-person="dor">Dor</button>
-                        <button class="filter-btn people-filter" data-person="danni">Danni</button>
-                        <button class="filter-btn people-filter" data-person="shilo">Shilo</button>
-                        <button class="filter-btn people-filter" data-person="amos">Amos</button>
-                        <button class="filter-btn people-filter" data-person="gal">Gal</button>
-                        <button class="filter-btn people-filter" data-person="tal">Tal</button>
-                        <button class="filter-btn people-filter" data-person="miriam">Miriam</button>
-                        <button class="filter-btn people-filter" data-person="avishai">Avishai</button>
-                        <button class="filter-btn people-filter" data-person="tzafrir">Tzafrir</button>
+                    <div class="filter-select-wrapper">
+                        <label for="personFilter">Team Member:</label>
+                        <select id="personFilter" class="filter-select">
+                            <option value="all">All</option>
+                            <option value="dor">Dor</option>
+                            <option value="danni">Danni</option>
+                            <option value="shilo">Shilo</option>
+                            <option value="amos">Amos</option>
+                            <option value="gal">Gal</option>
+                            <option value="tal">Tal</option>
+                            <option value="miriam">Miriam</option>
+                            <option value="avishai">Avishai</option>
+                            <option value="tzafrir">Tzafrir</option>
+                        </select>
                     </div>
-                    <div class="filter-group">
-                        <strong style="font-size: 0.85rem; color: var(--gray-dark); margin-right: 10px;">Project:</strong>
-                        <button class="filter-btn project-filter active" data-project-filter="all">All</button>
-                        <button class="filter-btn project-filter" data-project-filter="embedd">Embedd</button>
-                        <button class="filter-btn project-filter" data-project-filter="memory">Memory</button>
-                        <button class="filter-btn project-filter" data-project-filter="website">Website</button>
-                        <button class="filter-btn project-filter" data-project-filter="ai-orchestration">AI Orchestration</button>
-                        <button class="filter-btn project-filter" data-project-filter="slm">SLM</button>
-                        <button class="filter-btn project-filter" data-project-filter="vibe-report">Vibe Report</button>
-                        <button class="filter-btn project-filter" data-project-filter="campaign">Campaign</button>
-                        <button class="filter-btn project-filter" data-project-filter="mich-bot">Mich Bot</button>
-                        <button class="filter-btn project-filter" data-project-filter="aera">Aera</button>
-                        <button class="filter-btn project-filter" data-project-filter="agentshap">AgentShap</button>
+                    <div class="filter-select-wrapper">
+                        <label for="projectFilterSelect">Project:</label>
+                        <select id="projectFilterSelect" class="filter-select">
+                            <option value="all">All</option>
+                            <option value="embedd">Embedd</option>
+                            <option value="memory">Memory</option>
+                            <option value="website">Website</option>
+                            <option value="ai-orchestration">AI Orchestration</option>
+                            <option value="slm">SLM</option>
+                            <option value="vibe-report">Vibe Report</option>
+                            <option value="campaign">Campaign</option>
+                            <option value="mich-bot">Mich Bot</option>
+                            <option value="aera">Aera</option>
+                            <option value="agentshap">AgentShap</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -1728,36 +1771,24 @@
         }
 
         // Status filter
-        const statusFilterButtons = document.querySelectorAll('.status-filter');
-        statusFilterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                statusFilterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                currentStatusFilter = button.getAttribute('data-filter');
-                applyFilters();
-            });
+        const statusFilter = document.getElementById('statusFilter');
+        statusFilter.addEventListener('change', () => {
+            currentStatusFilter = statusFilter.value;
+            applyFilters();
         });
 
         // People filter
-        const peopleFilterButtons = document.querySelectorAll('.people-filter');
-        peopleFilterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                peopleFilterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                currentPersonFilter = button.getAttribute('data-person');
-                applyFilters();
-            });
+        const personFilter = document.getElementById('personFilter');
+        personFilter.addEventListener('change', () => {
+            currentPersonFilter = personFilter.value;
+            applyFilters();
         });
 
         // Project filter
-        const projectFilterButtons = document.querySelectorAll('.project-filter');
-        projectFilterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                projectFilterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                currentProjectFilter = button.getAttribute('data-project-filter');
-                applyFilters();
-            });
+        const projectFilterSelect = document.getElementById('projectFilterSelect');
+        projectFilterSelect.addEventListener('change', () => {
+            currentProjectFilter = projectFilterSelect.value;
+            applyFilters();
         });
 
         // Project details data
