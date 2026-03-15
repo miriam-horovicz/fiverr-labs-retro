@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiverr Labs - Project Timeline with Phases</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1dbf73;
+            --primary-dark: #19a463;
+            --secondary: #404145;
+            --accent: #ff6b2c;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --info: #3498db;
+            --purple: #9b59b6;
+            --teal: #1abc9c;
+            --gray-light: #f7f7f7;
+            --gray: #dadbdd;
+            --gray-dark: #62646a;
+            --white: #ffffff;
+            --shadow: 0 2px 8px rgba(0,0,0,0.1);
+            --shadow-lg: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--secondary);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            padding: 25px 40px;
+            background: var(--gray-light);
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 18px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary);
+            text-align: center;
+        }
+
+        .stat-card.success { border-left-color: var(--success); }
+        .stat-card.warning { border-left-color: var(--warning); }
+        .stat-card.info { border-left-color: var(--info); }
+
+        .stat-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray-dark);
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 2px solid var(--gray);
+            background: var(--white);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: var(--secondary);
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: var(--white);
+        }
+
+        /* Status filter colors */
+        .status-filter[data-filter="development"].active {
+            background: linear-gradient(135deg, #1dbf73, #19a463);
+            border-color: #1dbf73;
+        }
+
+        .status-filter[data-filter="testing"].active {
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+            border-color: #f59e0b;
+        }
+
+        .status-filter[data-filter="release"].active {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            border-color: #8b5cf6;
+        }
+
+        .status-filter[data-filter="maintenance"].active {
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            border-color: #06b6d4;
+        }
+
+        .status-filter[data-filter="paused"].active {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            border-color: #ef4444;
+        }
+
+        .status-filter[data-filter="completed"].active {
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-color: #10b981;
+        }
+
+        /* People filter colors */
+        .people-filter[data-person="dor"].active {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            border-color: #3b82f6;
+        }
+
+        .people-filter[data-person="danni"].active {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            border-color: #8b5cf6;
+        }
+
+        .people-filter[data-person="shilo"].active {
+            background: linear-gradient(135deg, #ec4899, #db2777);
+            border-color: #ec4899;
+        }
+
+        .people-filter[data-person="amos"].active {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border-color: #f59e0b;
+        }
+
+        .people-filter[data-person="gal"].active {
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-color: #10b981;
+        }
+
+        .people-filter[data-person="tal"].active {
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            border-color: #06b6d4;
+        }
+
+        .people-filter[data-person="miriam"].active {
+            background: linear-gradient(135deg, #f43f5e, #e11d48);
+            border-color: #f43f5e;
+        }
+
+        .people-filter[data-person="avishai"].active {
+            background: linear-gradient(135deg, #14b8a6, #0d9488);
+            border-color: #14b8a6;
+        }
+
+        .people-filter[data-person="tzafrir"].active {
+            background: linear-gradient(135deg, #a855f7, #9333ea);
+            border-color: #a855f7;
+        }
+
+        /* Timeline View */
+        .timeline-container {
+            overflow-x: auto;
+            margin-bottom: 40px;
+        }
+
+        .timeline-header {
+            display: flex;
+            margin-bottom: 15px;
+            padding: 15px 20px;
+            background: var(--gray-light);
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .project-name-col {
+            width: 280px;
+            flex-shrink: 0;
+        }
+
+        .months-header {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            gap: 8px;
+            min-width: 1000px;
+        }
+
+        .project-row {
+            display: flex;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: var(--white);
+            border: 1px solid var(--gray);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            align-items: flex-start;
+        }
+
+        .project-row:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateX(5px);
+        }
+
+        .project-row.hidden {
+            display: none;
+        }
+
+        .project-info {
+            width: 280px;
+            flex-shrink: 0;
+            padding-right: 20px;
+        }
+
+        .project-name {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--secondary);
+            margin-bottom: 8px;
+        }
+
+        .project-name strong {
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .project-name strong:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        .project-details {
+            font-size: 0.75rem;
+            color: var(--gray-dark);
+            line-height: 1.4;
+        }
+
+        .project-team {
+            margin-top: 10px;
+            padding: 10px 12px;
+            background: var(--gray-light);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .team-label {
+            color: var(--primary);
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .team-avatars {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .team-member-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--white);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .team-member-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.65rem;
+            color: var(--white);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        /* Avatar colors */
+        .avatar-dor { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+        .avatar-danni { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+        .avatar-shilo { background: linear-gradient(135deg, #ec4899, #db2777); }
+        .avatar-amos { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .avatar-gal { background: linear-gradient(135deg, #10b981, #059669); }
+        .avatar-tal { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+        .avatar-miriam { background: linear-gradient(135deg, #f43f5e, #e11d48); }
+        .avatar-avishai { background: linear-gradient(135deg, #14b8a6, #0d9488); }
+        .avatar-tzafrir { background: linear-gradient(135deg, #a855f7, #9333ea); }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-top: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Status badge colors - Development */
+        .badge-development {
+            background: linear-gradient(135deg, #1dbf73, #19a463);
+            color: var(--white);
+            box-shadow: 0 3px 12px rgba(29, 191, 115, 0.4);
+        }
+
+        /* Status badge colors - Testing */
+        .badge-testing {
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+            color: var(--white);
+            box-shadow: 0 3px 12px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Status badge colors - Release/Deployment */
+        .badge-release {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: var(--white);
+            box-shadow: 0 3px 12px rgba(139, 92, 246, 0.4);
+        }
+
+        /* Status badge colors - Maintenance */
+        .badge-maintenance {
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            color: var(--white);
+            box-shadow: 0 3px 12px rgba(6, 182, 212, 0.4);
+        }
+
+        /* Status badge colors - Paused */
+        .badge-paused {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: var(--white);
+            box-shadow: 0 3px 12px rgba(239, 68, 68, 0.4);
+        }
+
+        /* Status badge colors - Completed */
+        .badge-completed {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: var(--white);
+            box-shadow: 0 3px 12px rgba(16, 185, 129, 0.4);
+        }
+
+        .current-phase {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-weight: 800;
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .timeline-grid {
+            flex: 1;
+            position: relative;
+            min-height: 100px;
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            min-width: 1000px;
+        }
+
+        .month-col {
+            position: relative;
+            border-left: 1px dashed var(--gray);
+            min-height: 100px;
+        }
+
+        .month-col:first-child {
+            border-left: none;
+        }
+
+        /* Phase bars */
+        .phase-track {
+            position: relative;
+            height: 100%;
+        }
+
+        .phase {
+            position: absolute;
+            height: 22px;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--white);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            padding: 0 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .phase:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            z-index: 10;
+        }
+
+        /* Phase types */
+        .phase-discovery {
+            background: linear-gradient(90deg, #9b59b6, #8e44ad);
+        }
+
+        .phase-design {
+            background: linear-gradient(90deg, #3498db, #2980b9);
+        }
+
+        .phase-development {
+            background: linear-gradient(90deg, #1dbf73, #19a463);
+        }
+
+        .phase-testing {
+            background: linear-gradient(90deg, #f39c12, #e67e22);
+        }
+
+        .phase-deployment {
+            background: linear-gradient(90deg, #2ecc71, #27ae60);
+        }
+
+        .phase-release {
+            background: linear-gradient(90deg, #8b5cf6, #7c3aed);
+        }
+
+        .phase-maintenance {
+            background: linear-gradient(90deg, #06b6d4, #0891b2);
+        }
+
+        .phase-paused {
+            background: linear-gradient(90deg, #95a5a6, #7f8c8d);
+        }
+
+        /* Phase positioning */
+        .phase-row-1 { top: 5px; }
+        .phase-row-2 { top: 32px; }
+        .phase-row-3 { top: 59px; }
+        .phase-row-4 { top: 86px; }
+
+        /* Combined view project bars */
+        .combined-timeline-grid {
+            position: relative;
+            min-height: 400px;
+        }
+
+        .combined-project-bar {
+            position: absolute;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--white);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .combined-project-bar:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            z-index: 10;
+        }
+
+        /* Project-specific colors */
+        .bar-embedd { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+        .bar-memory { background: linear-gradient(135deg, #f43f5e, #e11d48); }
+        .bar-website { background: linear-gradient(135deg, #14b8a6, #0d9488); }
+        .bar-ai-orchestration { background: linear-gradient(135deg, #10b981, #059669); }
+        .bar-slm { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .bar-vibe-report { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+        .bar-campaign { background: linear-gradient(135deg, #ec4899, #db2777); }
+        .bar-mich-bot { background: linear-gradient(135deg, #a855f7, #9333ea); }
+        .bar-aera { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+        .bar-agentshap { background: linear-gradient(135deg, #1dbf73, #19a463); }
+
+        /* Legend */
+        .phase-legend {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 20px;
+            background: var(--gray-light);
+            border-radius: 8px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .phase-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .phase-legend-color {
+            width: 30px;
+            height: 18px;
+            border-radius: 9px;
+        }
+
+        /* High-Level Timeline */
+        .labs-timeline-section {
+            padding: 50px 40px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .labs-timeline-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .labs-timeline-subtitle {
+            font-size: 1rem;
+            color: var(--gray-dark);
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .milestone-timeline {
+            position: relative;
+            padding: 60px 0;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .milestone-line {
+            position: absolute;
+            top: 85px;
+            left: 5%;
+            right: 5%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--info) 50%, var(--success) 100%);
+            border-radius: 3px;
+            box-shadow: 0 3px 10px rgba(29, 191, 115, 0.3);
+            z-index: 1;
+        }
+
+        .milestones-container {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            z-index: 2;
+            padding: 0 5%;
+        }
+
+        .milestone {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .milestone-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: 5px solid var(--white);
+            box-shadow: 0 4px 15px rgba(29, 191, 115, 0.4);
+            position: relative;
+            z-index: 3;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .milestone-dot::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 12px;
+            background: var(--white);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .milestone:hover .milestone-dot {
+            transform: scale(1.4);
+            box-shadow: 0 6px 20px rgba(29, 191, 115, 0.6);
+        }
+
+        .milestone:hover .milestone-dot::before {
+            width: 16px;
+            height: 16px;
+        }
+
+        .milestone-card {
+            margin-top: 20px;
+            background: var(--white);
+            padding: 15px 18px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary);
+            max-width: 200px;
+        }
+
+        .milestone:hover .milestone-card {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-left-width: 6px;
+        }
+
+        .milestone-date {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--white);
+            background: var(--primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            text-align: center;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .milestone-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--secondary);
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .milestone-icon {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        @media (max-width: 1400px) {
+            .project-name-col,
+            .project-info {
+                width: 220px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .timeline-container {
+                overflow-x: scroll;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .project-row {
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Modal for project details */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            width: 80%;
+            max-width: 600px;
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-close {
+            color: var(--gray-dark);
+            float: right;
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--primary);
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .modal-section {
+            margin-bottom: 20px;
+        }
+
+        .modal-section h3 {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .modal-section p {
+            font-size: 1rem;
+            color: var(--secondary);
+            line-height: 1.6;
+            margin: 5px 0;
+        }
+
+        .modal-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .modal-section li {
+            padding: 8px 0;
+            font-size: 1rem;
+            color: var(--secondary);
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .modal-section li:before {
+            content: "✓ ";
+            color: var(--primary);
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        /* Ideas Section */
+        .ideas-section {
+            padding: 40px;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-top: 3px solid var(--warning);
+        }
+
+        .ideas-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .ideas-subtitle {
+            font-size: 1rem;
+            color: var(--gray-dark);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .ideas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .idea-card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--warning);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .idea-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-left-width: 8px;
+        }
+
+        .idea-card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 12px;
+        }
+
+        .idea-card-status {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: var(--white);
+            margin-bottom: 15px;
+        }
+
+        .idea-card-description {
+            font-size: 0.95rem;
+            color: var(--gray-dark);
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .tab-btn {
+            padding: 12px 30px;
+            border: 3px solid var(--gray);
+            background: var(--white);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            color: var(--secondary);
+        }
+
+        .tab-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: var(--white);
+            box-shadow: var(--shadow);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Fiverr Labs</h1>
+            <p>7 Month Retrospective</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card success">
+                <div class="stat-label">Released</div>
+                <div class="stat-value">4</div>
+            </div>
+            <div class="stat-card success">
+                <div class="stat-label">Completed</div>
+                <div class="stat-value">2</div>
+            </div>
+            <div class="stat-card info">
+                <div class="stat-label">In Progress</div>
+                <div class="stat-value">6</div>
+            </div>
+            <div class="stat-card warning">
+                <div class="stat-label">Paused</div>
+                <div class="stat-value">2</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Projects</div>
+                <div class="stat-value">10</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Team Members</div>
+                <div class="stat-value">9</div>
+            </div>
+        </div>
+
+        <!-- Team Capacity Section -->
+        <div class="stats-grid" style="background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%); border-bottom: 3px solid var(--warning);">
+            <div class="stat-card" style="grid-column: 1 / -1; border-left-color: var(--warning);">
+                <div class="stat-label">Team Capacity Notes</div>
+                <div style="font-size: 0.95rem; color: var(--secondary); text-align: left; margin-top: 10px; line-height: 1.8;">
+                    <strong style="color: var(--warning);">Embedd Priority:</strong> Dor, Amos, Shilo, Danni, and Tal spent significant time on Embedd during the multi-month development cycle.
+                    <br>
+                    <strong style="color: var(--warning);">50% Labs Allocation:</strong> Tzafrir and Miriam dedicated approximately 50% of their capacity to Labs projects throughout this period.
+                </div>
+            </div>
+        </div>
+
+        <!-- High-Level Labs Timeline -->
+        <div class="labs-timeline-section">
+            <h2 class="labs-timeline-title">Fiverr Labs Journey - Key Milestones</h2>
+            <p class="labs-timeline-subtitle">From Concept to Launch: Our 7-Month Evolution</p>
+            <div class="milestone-timeline">
+                <div class="milestone-line"></div>
+                <div class="milestones-container">
+                    <div class="milestone">
+                        <div class="milestone-dot"></div>
+                        <div class="milestone-card">
+                            <div class="milestone-icon">💡</div>
+                            <div class="milestone-date">8 Jul 2025</div>
+                            <div class="milestone-label">Internal Discussion & Formulation</div>
+                        </div>
+                    </div>
+                    <div class="milestone">
+                        <div class="milestone-dot"></div>
+                        <div class="milestone-card">
+                            <div class="milestone-icon">👥</div>
+                            <div class="milestone-date">22 Jul 2025</div>
+                            <div class="milestone-label">Formal Introduction to Full Team</div>
+                        </div>
+                    </div>
+                    <div class="milestone">
+                        <div class="milestone-dot"></div>
+                        <div class="milestone-card">
+                            <div class="milestone-icon">🎯</div>
+                            <div class="milestone-date">29 Jul 2025</div>
+                            <div class="milestone-label">Internal First Idea Pitching</div>
+                        </div>
+                    </div>
+                    <div class="milestone">
+                        <div class="milestone-dot"></div>
+                        <div class="milestone-card">
+                            <div class="milestone-icon">🚀</div>
+                            <div class="milestone-date">6 Aug 2025</div>
+                            <div class="milestone-label">First Ideas Pitching with Micha</div>
+                        </div>
+                    </div>
+                    <div class="milestone">
+                        <div class="milestone-dot"></div>
+                        <div class="milestone-card">
+                            <div class="milestone-icon">🏖️</div>
+                            <div class="milestone-date">25 Nov 2025</div>
+                            <div class="milestone-label">First Labs Offsite</div>
+                        </div>
+                    </div>
+                    <div class="milestone">
+                        <div class="milestone-dot"></div>
+                        <div class="milestone-card">
+                            <div class="milestone-icon">🌐</div>
+                            <div class="milestone-date">19 Jan 2026</div>
+                            <div class="milestone-label">Website Published</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Tab Navigation -->
+            <div class="tab-container">
+                <button class="tab-btn active" id="projectsTab">Projects</button>
+                <button class="tab-btn" id="ideasTab">Ideas</button>
+            </div>
+
+            <!-- Projects Tab Content -->
+            <div class="tab-content active" id="projectsContent">
+            <!-- Controls -->
+            <div class="controls">
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <h2 style="margin: 0; font-size: 1.5rem;">Project Timeline</h2>
+                    <div class="filter-group">
+                        <button class="filter-btn view-toggle active" id="individualView">Individual Projects</button>
+                        <button class="filter-btn view-toggle" id="combinedView">Combined View</button>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <div class="filter-group">
+                        <strong style="font-size: 0.85rem; color: var(--gray-dark); margin-right: 10px;">Status:</strong>
+                        <button class="filter-btn status-filter active" data-filter="all">All</button>
+                        <button class="filter-btn status-filter" data-filter="development">Development</button>
+                        <button class="filter-btn status-filter" data-filter="testing">Testing</button>
+                        <button class="filter-btn status-filter" data-filter="release">Release</button>
+                        <button class="filter-btn status-filter" data-filter="maintenance">Maintenance</button>
+                        <button class="filter-btn status-filter" data-filter="paused">Paused</button>
+                        <button class="filter-btn status-filter" data-filter="completed">Completed</button>
+                    </div>
+                    <div class="filter-group">
+                        <strong style="font-size: 0.85rem; color: var(--gray-dark); margin-right: 10px;">Team Member:</strong>
+                        <button class="filter-btn people-filter active" data-person="all">All</button>
+                        <button class="filter-btn people-filter" data-person="dor">Dor</button>
+                        <button class="filter-btn people-filter" data-person="danni">Danni</button>
+                        <button class="filter-btn people-filter" data-person="shilo">Shilo</button>
+                        <button class="filter-btn people-filter" data-person="amos">Amos</button>
+                        <button class="filter-btn people-filter" data-person="gal">Gal</button>
+                        <button class="filter-btn people-filter" data-person="tal">Tal</button>
+                        <button class="filter-btn people-filter" data-person="miriam">Miriam</button>
+                        <button class="filter-btn people-filter" data-person="avishai">Avishai</button>
+                        <button class="filter-btn people-filter" data-person="tzafrir">Tzafrir</button>
+                    </div>
+                    <div class="filter-group">
+                        <strong style="font-size: 0.85rem; color: var(--gray-dark); margin-right: 10px;">Project:</strong>
+                        <button class="filter-btn project-filter active" data-project-filter="all">All</button>
+                        <button class="filter-btn project-filter" data-project-filter="embedd">Embedd</button>
+                        <button class="filter-btn project-filter" data-project-filter="memory">Memory</button>
+                        <button class="filter-btn project-filter" data-project-filter="website">Website</button>
+                        <button class="filter-btn project-filter" data-project-filter="ai-orchestration">AI Orchestration</button>
+                        <button class="filter-btn project-filter" data-project-filter="slm">SLM</button>
+                        <button class="filter-btn project-filter" data-project-filter="vibe-report">Vibe Report</button>
+                        <button class="filter-btn project-filter" data-project-filter="campaign">Campaign</button>
+                        <button class="filter-btn project-filter" data-project-filter="mich-bot">Mich Bot</button>
+                        <button class="filter-btn project-filter" data-project-filter="aera">Aera</button>
+                        <button class="filter-btn project-filter" data-project-filter="agentshap">AgentShap</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="timeline-container" id="individualTimeline">
+                <div class="timeline-header">
+                    <div class="project-name-col">Project & Details</div>
+                    <div class="months-header">
+                        <div>Aug '25</div>
+                        <div>Sep '25</div>
+                        <div>Oct '25</div>
+                        <div>Nov '25</div>
+                        <div>Dec '25</div>
+                        <div>Jan '26</div>
+                        <div>Feb '26</div>
+                    </div>
+                </div>
+
+                <!-- Project 1: Embedd -->
+                <div class="project-row" data-status="maintenance" data-project="embedd" data-people="dor,danni,shilo,amos,gal,tal,tzafrir">
+                    <div class="project-info">
+                        <div class="project-name">
+                            <strong onclick="showProjectDetails('embedd')">Embedd</strong>
+                            <span class="status-badge badge-maintenance">Maintenance</span>
+                        </div>
+                        <div class="project-team">
+                            <span class="team-label">Team</span>
+                            <div class="team-avatars">
+                                <div class="team-member-badge avatar-dor">
+                                    <div class="avatar">DO</div>
+                                    <span>Dor</span>
+                                </div>
+                                <div class="team-member-badge avatar-danni">
+                                    <div class="avatar">DA</div>
+                                    <span>Danni</span>
+                                </div>
+                                <div class="team-member-badge avatar-shilo">
+                                    <div class="avatar">SH</div>
+                                    <span>Shilo</span>
+                                </div>
+                                <div class="team-member-badge avatar-amos">
+                                    <div class="avatar">AM</div>
+                                    <span>Amos</span>
+                                </div>
+                                <div class="team-member-badge avatar-gal">
+                                    <div class="avatar">GA</div>
+                                    <span>Gal</span>
+                                </div>
+                                <div class="team-member-badge avatar-tal">
+                                    <div class="avatar">TA</div>
+                                    <span>Tal</span>
+                                </div>
+                                <div class="team-member-badge avatar-tzafrir">
+                                    <div class="avatar">TZ</div>
+                                    <span>Tzafrir</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-grid">
+                        <div class="phase-track">
+                            <div class="phase phase-development phase-row-1" style="left: 50%; width: 50%;" onclick="showProjectDetails('embedd')">Development</div>
+                        </div>
+                        <div class="phase-track">
+                            <div class="phase phase-development phase-row-1" style="left: 0%; width: 100%;" onclick="showProjectDetails('embedd')">Development</div>
+                        </div>
+                        <div class="phase-track">
+                            <div class="phase phase-development phase-row-1" style="left: 0%; width: 100%;" onclick="showProjectDetails('embedd')">Development</div>
+                        </div>
+                        <div class="phase-track">
+                            <div class="phase phase-development phase-row-1" style="left: 0%; width: 50%;" onclick="showProjectDetails('embedd')">Development</div>
+                            <div class="phase phase-testing phase-row-2" style="left: 50%; width: 50%;" onclick="showProjectDetails('embedd')">Testing</div>
+                        </div>
+                        <div class="phase-track">
+                            <div class="phase phase-testing phase-row-2" style="left: 0%; width: 100%;" onclick="showProjectDetails('embedd')">Testing</div>
+                        </div>
+                        <div class="phase-track">
+                            <div class="phase phase-deployment phase-row-1" style="left: 0%; width: 100%;" onclick="showProjectDetails('embedd')">Release</div>
+                        </div>
+                        <div class="phase-track">
+                            <div class="phase phase-maintenance phase-row-2" style="left: 0%; width: 100%;" onclick="showProjectDetails('embedd')">Maintenance</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: Memory -->
+                <div class="project-row" data-status="paused" data-project="memory" data-people="miriam,shilo">
+                    <div class="project-info">
+                        <div class="project-name">
+                            <strong onclick="showProjectDetails('memory')">Memory</strong>
+                            <span class="status-badge badge-paused">Paused</span>
+                        </div>
+                        <div class="project-team">
+                            <span class="team-label">Team</span>
+                            <div class="team-avatars">
+                                <div class="team-member-badge avatar-miriam">
+                                    <div class="avatar">MI</div>
+                                    <span>Miriam</span>
+                                </div>
+                                <div class="team-member-badge avatar-shilo">
+                                    <div class="avatar">SH</div>
+                                    <span>Shilo</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-grid">
+                        <div class="phase-track">
+                            <div class="phase phase-development phase-row-1" style="left: 0%; width: 50%;" onclick="showProjectDetails('memory')">Development</div>
+                            <div class="phase phase-paused phase-row-2" style="left: 50%; width: 50%;" onclick="showProjectDetails('memory')">Paused</div>
+                        </div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                    </div>
+                </div>
+
+                <!-- Project 3: Website -->
+                <div class="project-row" data-status="maintenance" data-project="website" data-people="dor,danni,avishai,tzafrir">
+                    <div class="project-info">
+                        <div class="project-name">
+                            <strong onclick="showProjectDetails('website')">Website</strong>
+                            <span class="status-badge badge-maintenance">Maintenance</span>
+                        </div>
+                        <div class="project-team">
+                            <span class="team-label">Team</span>
+                            <div class="team-avatars">
+                                <div class="team-member-badge avatar-dor">
+                                    <div class="avatar">DO</div>
+                                    <span>Dor</span>
+                                </div>
+                                <div class="team-member-badge avatar-danni">
+                                    <div class="avatar">DA</div>
+                                    <span>Danni</span>
+                                </div>
+                                <div class="team-member-badge avatar-avishai">
+                                    <div class="avatar">AV</div>
+                                    <span>Avishai</span>
+                                </div>
+                                <div class="team-member-badge avatar-tzafrir">
+                                    <div class="avatar">TZ</div>
+                                    <span>Tzafrir</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-grid">
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track">
+                            <div class="phase phase-development phase-row-1" style="left: 0%; width: 100%;" onclick="showProjectDetails('website')">Development</div>
+                        </div>
+                        <div class="phase-track">
+                            <div class="phase phase-release phase-row-1" style="left: 0%; width: 30%;" onclick="showProjectDetails('website')">Release</div>
+                            <div class="phase phase-maintenance phase-row-2" style="left: 30%; width: 70%;" onclick="showProjectDetails('website')">Maintenance</div>
+                        </div>
+                        <div class="phase-track">
+                            <div class="phase phase-maintenance phase-row-2" style="left: 0%; width: 100%;" onclick="showProjectDetails('website')">Maintenance</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4: AI Orchestration Infra + Applications -->
+                <div class="project-row" data-status="development" data-project="ai-orchestration" data-people="gal,amos,miriam">
+                    <div class="project-info">
+                        <div class="project-name">
+                            <strong onclick="showProjectDetails('ai-orchestration')">AI Orchestration Infra + Applications</strong>
+                            <span class="status-badge badge-development">Development</span>
+                        </div>
+                        <div class="project-team">
+                            <span class="team-label">Team</span>
+                            <div class="team-avatars">
+                                <div class="team-member-badge avatar-gal">
+                                    <div class="avatar">GA</div>
+                                    <span>Gal</span>
+                                </div>
+                                <div class="team-member-badge avatar-amos">
+                                    <div class="avatar">AM</div>
+                                    <span>Amos</span>
+                                </div>
+                                <div class="team-member-badge avatar-miriam">
+                                    <div class="avatar">MI</div>
+                                    <span>Miriam</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-grid">
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track">
+                            <div class="phase phase-development phase-row-1" style="left: 0%; width: 100%;" onclick="showProjectDetails('ai-orchestration')">Development</div>
+                        </div>
+                        <div class="phase-track">
+                            <div class="phase phase-development phase-row-1" style="left: 0%; width: 100%;" onclick="showProjectDetails('ai-orchestration')">Development</div>
+                        </div>
+                        <div class="phase-track">
+                            <div class="phase phase-development phase-row-1" style="left: 0%; width: 100%;" onclick="showProjectDetails('ai-orchestration')">Development</div>
+                        </div>
+                        <div class="phase-track">
+                            <div class="phase phase-development phase-row-1" style="left: 0%; width: 100%;" onclick="showProjectDetails('ai-orchestration')">Development</div>
+                        </div>
+                        <div class="phase-track"></div>
+                    </div>
+                </div>
+
+                <!-- Project 5: SLM -->
+                <div class="project-row" data-status="paused" data-project="slm" data-people="amos,gal">
+                    <div class="project-info">
+                        <div class="project-name">
+                            <strong onclick="showProjectDetails('slm')">SLM</strong>
+                            <span class="status-badge badge-paused">Paused</span>
+                        </div>
+                        <div class="project-team">
+                            <span class="team-label">Team</span>
+                            <div class="team-avatars">
+                                <div class="team-member-badge avatar-amos">
+                                    <div class="avatar">AM</div>
+                                    <span>Amos</span>
+                                </div>
+                                <div class="team-member-badge avatar-gal">
+                                    <div class="avatar">GA</div>
+                                    <span>Gal</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-grid">
+                        <div class="phase-track">
+                            <div class="phase phase-development phase-row-1" style="left: 0%; width: 100%;" onclick="showProjectDetails('slm')">Development</div>
+                        </div>
+                        <div class="phase-track">
+                            <div class="phase phase-development phase-row-1" style="left: 0%; width: 50%;" onclick="showProjectDetails('slm')">Development</div>
+                            <div class="phase phase-paused phase-row-2" style="left: 50%; width: 50%;" onclick="showProjectDetails('slm')">Paused</div>
+                        </div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                    </div>
+                </div>
+
+                <!-- Project 6: Vibe Report -->
+                <div class="project-row" data-status="testing" data-project="vibe-report" data-people="avishai,danni,shilo,gal,amos">
+                    <div class="project-info">
+                        <div class="project-name">
+                            <strong onclick="showProjectDetails('vibe-report')">Vibe Report</strong>
+                            <span class="status-badge badge-testing">Testing</span>
+                        </div>
+                        <div class="project-team">
+                            <span class="team-label">Team</span>
+                            <div class="team-avatars">
+                                <div class="team-member-badge avatar-avishai">
+                                    <div class="avatar">AV</div>
+                                    <span>Avishai</span>
+                                </div>
+                                <div class="team-member-badge avatar-danni">
+                                    <div class="avatar">DA</div>
+                                    <span>Danni</span>
+                                </div>
+                                <div class="team-member-badge avatar-shilo">
+                                    <div class="avatar">SH</div>
+                                    <span>Shilo</span>
+                                </div>
+                                <div class="team-member-badge avatar-gal">
+                                    <div class="avatar">GA</div>
+                                    <span>Gal</span>
+                                </div>
+                                <div class="team-member-badge avatar-amos">
+                                    <div class="avatar">AM</div>
+                                    <span>Amos</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-grid">
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track">
+                            <div class="phase phase-development phase-row-1" style="left: 0%; width: 100%;" onclick="showProjectDetails('vibe-report')">Development</div>
+                        </div>
+                        <div class="phase-track">
+                            <div class="phase phase-development phase-row-1" style="left: 0%; width: 100%;" onclick="showProjectDetails('vibe-report')">Development</div>
+                        </div>
+                        <div class="phase-track">
+                            <div class="phase phase-testing phase-row-1" style="left: 0%; width: 100%;" onclick="showProjectDetails('vibe-report')">Testing</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 7: Report Campaign -->
+                <div class="project-row" data-status="completed" data-project="campaign" data-people="miriam,danni">
+                    <div class="project-info">
+                        <div class="project-name">
+                            <strong onclick="showProjectDetails('campaign')">Report Campaign</strong>
+                            <span class="status-badge badge-completed">Completed</span>
+                        </div>
+                        <div class="project-team">
+                            <span class="team-label">Team</span>
+                            <div class="team-avatars">
+                                <div class="team-member-badge avatar-miriam">
+                                    <div class="avatar">MI</div>
+                                    <span>Miriam</span>
+                                </div>
+                                <div class="team-member-badge avatar-danni">
+                                    <div class="avatar">DA</div>
+                                    <span>Danni</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-grid">
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track">
+                            <div class="phase phase-development phase-row-1" style="left: 0%; width: 100%;" onclick="showProjectDetails('campaign')">Development</div>
+                        </div>
+                        <div class="phase-track">
+                            <div class="phase phase-release phase-row-1" style="left: 0%; width: 100%;" onclick="showProjectDetails('campaign')">Release</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 8: Mich Bot -->
+                <div class="project-row" data-status="development" data-project="mich-bot" data-people="tzafrir">
+                    <div class="project-info">
+                        <div class="project-name">
+                            <strong onclick="showProjectDetails('mich-bot')">Mich Bot</strong>
+                            <span class="status-badge badge-development">Development</span>
+                        </div>
+                        <div class="project-team">
+                            <span class="team-label">Team</span>
+                            <div class="team-avatars">
+                                <div class="team-member-badge avatar-tzafrir">
+                                    <div class="avatar">TZ</div>
+                                    <span>Tzafrir</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-grid">
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track">
+                            <div class="phase phase-development phase-row-1" style="left: 0%; width: 100%;" onclick="showProjectDetails('mich-bot')">Development</div>
+                        </div>
+                        <div class="phase-track">
+                            <div class="phase phase-development phase-row-1" style="left: 0%; width: 100%;" onclick="showProjectDetails('mich-bot')">Development</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 9: Aera -->
+                <div class="project-row" data-status="development" data-project="aera" data-people="miriam,gal">
+                    <div class="project-info">
+                        <div class="project-name">
+                            <strong onclick="showProjectDetails('aera')">Aera</strong>
+                            <span class="status-badge badge-development">Development</span>
+                        </div>
+                        <div class="project-team">
+                            <span class="team-label">Team</span>
+                            <div class="team-avatars">
+                                <div class="team-member-badge avatar-miriam">
+                                    <div class="avatar">MI</div>
+                                    <span>Miriam</span>
+                                </div>
+                                <div class="team-member-badge avatar-gal">
+                                    <div class="avatar">GA</div>
+                                    <span>Gal</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-grid">
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track">
+                            <div class="phase phase-development phase-row-1" style="left: 0%; width: 100%;" onclick="showProjectDetails('aera')">Development</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 10: AgentShap -->
+                <div class="project-row" data-status="completed" data-project="agentshap" data-people="miriam">
+                    <div class="project-info">
+                        <div class="project-name">
+                            <strong onclick="showProjectDetails('agentshap')">AgentShap</strong>
+                            <span class="status-badge badge-completed">Completed</span>
+                        </div>
+                        <div class="project-team">
+                            <span class="team-label">Team</span>
+                            <div class="team-avatars">
+                                <div class="team-member-badge avatar-miriam">
+                                    <div class="avatar">MI</div>
+                                    <span>Miriam</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-grid">
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track">
+                            <div class="phase phase-development phase-row-1" style="left: 0%; width: 100%;" onclick="showProjectDetails('agentshap')">Development</div>
+                        </div>
+                        <div class="phase-track">
+                            <div class="phase phase-release phase-row-1" style="left: 0%; width: 100%;" onclick="showProjectDetails('agentshap')">Release</div>
+                        </div>
+                        <div class="phase-track"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Combined Timeline View -->
+            <div class="timeline-container" id="combinedTimeline" style="display: none;">
+                <div class="timeline-header">
+                    <div class="project-name-col">All Projects</div>
+                    <div class="months-header">
+                        <div>Aug '25</div>
+                        <div>Sep '25</div>
+                        <div>Oct '25</div>
+                        <div>Nov '25</div>
+                        <div>Dec '25</div>
+                        <div>Jan '26</div>
+                        <div>Feb '26</div>
+                    </div>
+                </div>
+
+                <!-- Combined View Row -->
+                <div class="project-row" style="min-height: 420px; align-items: stretch;">
+                    <div class="project-info">
+                        <div class="project-name">
+                            <strong>Project Timelines</strong>
+                        </div>
+                        <div class="project-team">
+                            <span class="team-label">Duration View</span>
+                            <div style="font-size: 0.75rem; color: var(--gray-dark); margin-top: 5px;">
+                                Each bar shows full project duration
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-grid combined-timeline-grid">
+                        <!-- Embedd: Aug (mid) - Feb (all 7 months = 100%) -->
+                        <div class="combined-project-bar bar-embedd" style="left: 7%; width: 93%; top: 10px;" onclick="showProjectDetails('embedd')">Embedd</div>
+
+                        <!-- Memory: Aug (first half) -->
+                        <div class="combined-project-bar bar-memory" style="left: 0%; width: 7%; top: 50px;" onclick="showProjectDetails('memory')">Memory</div>
+
+                        <!-- Website: Dec - Feb (3 months) -->
+                        <div class="combined-project-bar bar-website" style="left: 57%; width: 43%; top: 90px;" onclick="showProjectDetails('website')">Website</div>
+
+                        <!-- AI Orchestration: Oct - Jan (4 months) -->
+                        <div class="combined-project-bar bar-ai-orchestration" style="left: 29%; width: 57%; top: 130px;" onclick="showProjectDetails('ai-orchestration')">AI Orchestration</div>
+
+                        <!-- SLM: Aug - Sep (mid) (1.5 months) -->
+                        <div class="combined-project-bar bar-slm" style="left: 0%; width: 21%; top: 170px;" onclick="showProjectDetails('slm')">SLM</div>
+
+                        <!-- Vibe Report: Dec - Feb (3 months) -->
+                        <div class="combined-project-bar bar-vibe-report" style="left: 57%; width: 43%; top: 210px;" onclick="showProjectDetails('vibe-report')">Vibe Report</div>
+
+                        <!-- Report Campaign: Jan - Feb (2 months) -->
+                        <div class="combined-project-bar bar-campaign" style="left: 71%; width: 29%; top: 250px;" onclick="showProjectDetails('campaign')">Report Campaign</div>
+
+                        <!-- Mich Bot: Jan - Feb (2 months) -->
+                        <div class="combined-project-bar bar-mich-bot" style="left: 71%; width: 29%; top: 290px;" onclick="showProjectDetails('mich-bot')">Mich Bot</div>
+
+                        <!-- Aera: Feb (1 month) -->
+                        <div class="combined-project-bar bar-aera" style="left: 86%; width: 14%; top: 330px;" onclick="showProjectDetails('aera')">Aera</div>
+
+                        <!-- AgentShap: Dec - Jan (2 months) -->
+                        <div class="combined-project-bar bar-agentshap" style="left: 57%; width: 29%; top: 370px;" onclick="showProjectDetails('agentshap')">AgentShap</div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <!-- End Projects Tab Content -->
+
+            <!-- Ideas Tab Content -->
+            <div class="tab-content" id="ideasContent">
+                <h2 class="ideas-title">Ideas Pitched</h2>
+                <p class="ideas-subtitle">Concepts explored but not pursued during this retrospective period</p>
+
+                <div class="ideas-grid">
+                    <!-- Idea 1: Do Me a Fiverr -->
+                    <div class="idea-card" onclick="showIdeaDetails('do-me-a-fiverr')">
+                        <div class="idea-card-title">Do Me a Fiverr</div>
+                        <span class="idea-card-status">Not Accepted</span>
+                        <div class="idea-card-description">
+                            A concept for a new service offering or feature that was pitched but ultimately not pursued during this period.
+                        </div>
+                    </div>
+
+                    <!-- Idea 2: Fiverr Sales -->
+                    <div class="idea-card" onclick="showIdeaDetails('fiverr-sales')">
+                        <div class="idea-card-title">Fiverr Sales</div>
+                        <span class="idea-card-status">Not Accepted</span>
+                        <div class="idea-card-description">
+                            A sales-focused initiative or tool that was proposed but not selected for development in this cycle.
+                        </div>
+                    </div>
+
+                    <!-- Idea 3: Benchmark -->
+                    <div class="idea-card" onclick="showIdeaDetails('benchmark')">
+                        <div class="idea-card-title">Benchmark</div>
+                        <span class="idea-card-status">Not Accepted</span>
+                        <div class="idea-card-description">
+                            A benchmarking system or comparison tool concept that was explored but not advanced to the development phase.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Ideas Tab Content -->
+
+        </div>
+    </div>
+
+    <!-- Modal for Project Details -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h2 class="modal-title" id="modalTitle">Project Details</h2>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        // Filter state
+        let currentStatusFilter = 'all';
+        let currentPersonFilter = 'all';
+        let currentProjectFilter = 'all';
+
+        const projectRows = document.querySelectorAll('.project-row');
+
+        // Apply all filters
+        function applyFilters() {
+            projectRows.forEach(row => {
+                const status = row.getAttribute('data-status');
+                const people = row.getAttribute('data-people') || '';
+                const project = row.getAttribute('data-project') || '';
+
+                let showStatus = currentStatusFilter === 'all' || status === currentStatusFilter;
+                let showPerson = currentPersonFilter === 'all' || people.includes(currentPersonFilter);
+                let showProject = currentProjectFilter === 'all' || project === currentProjectFilter;
+
+                if (showStatus && showPerson && showProject) {
+                    row.classList.remove('hidden');
+                } else {
+                    row.classList.add('hidden');
+                }
+            });
+        }
+
+        // Status filter
+        const statusFilterButtons = document.querySelectorAll('.status-filter');
+        statusFilterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                statusFilterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                currentStatusFilter = button.getAttribute('data-filter');
+                applyFilters();
+            });
+        });
+
+        // People filter
+        const peopleFilterButtons = document.querySelectorAll('.people-filter');
+        peopleFilterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                peopleFilterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                currentPersonFilter = button.getAttribute('data-person');
+                applyFilters();
+            });
+        });
+
+        // Project filter
+        const projectFilterButtons = document.querySelectorAll('.project-filter');
+        projectFilterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                projectFilterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                currentProjectFilter = button.getAttribute('data-project-filter');
+                applyFilters();
+            });
+        });
+
+        // Project details data
+        const projectDetails = {
+            'embedd': {
+                title: 'Embedd',
+                timeline: [
+                    'Started: Late August 2025',
+                    'Development: Aug - Nov 2025',
+                    'Testing: Nov - Dec 2025',
+                    'Multi-partner Release: January 2026',
+                    'Current Status: Maintenance & Improvements'
+                ],
+                team: ['Dor', 'Danni', 'Shilo', 'Amos', 'Gal', 'Tal', 'Tzafrir'],
+                notes: 'Multi-partner release successfully deployed in January 2026. Currently in maintenance phase with ongoing improvements.'
+            },
+            'memory': {
+                title: 'Memory',
+                timeline: [
+                    'Started: August 2025',
+                    'Development: 2 weeks',
+                    'Current Status: Paused'
+                ],
+                team: ['Miriam', 'Shilo'],
+                notes: 'Paused due to Embedd. Partially implemented in infra and data hive.'
+            },
+            'website': {
+                title: 'Website',
+                timeline: [
+                    'Started: December 2025',
+                    'Development: December 2025',
+                    'Release: January 2026',
+                    'Maintenance: Jan - Feb 2026',
+                    'Current Status: Maintenance'
+                ],
+                team: ['Dor', 'Danni', 'Avishai', 'Tzafrir'],
+                notes: 'Deployed. Continue publishing content, updates, and improvements.'
+            },
+            'ai-orchestration': {
+                title: 'AI Orchestration Infra + Applications',
+                timeline: [
+                    'Started: October 2025',
+                    'Development: Oct 2025 - Jan 2026',
+                    'Current Status: In Development'
+                ],
+                team: ['Gal', 'Amos', 'Miriam'],
+                notes: 'Deployed in data hive. ComfyUI test completed.'
+            },
+            'slm': {
+                title: 'SLM',
+                timeline: [
+                    'Started: August 2025',
+                    'Development: Aug - Sep 2025',
+                    'Paused: Mid-September 2025',
+                    'Current Status: Paused'
+                ],
+                team: ['Amos', 'Gal'],
+                notes: 'Paused due to Embedd.'
+            },
+            'vibe-report': {
+                title: 'Vibe Report',
+                timeline: [
+                    'Started: December 2025',
+                    'Development: Dec 2025 - Jan 2026',
+                    'Testing: February 2026',
+                    'Current Status: Testing'
+                ],
+                team: ['Avishai', 'Danni', 'Shilo', 'Gal', 'Amos'],
+                notes: 'Development from December through January. Currently in testing phase (February 2026).'
+            },
+            'campaign': {
+                title: 'Report Campaign',
+                timeline: [
+                    'Started: January 2026',
+                    'Development: January 2026',
+                    'Release: February 2026',
+                    'Current Status: Completed'
+                ],
+                team: ['Miriam', 'Danni'],
+                notes: 'Successfully developed in January 2026 and released in February 2026.'
+            },
+            'mich-bot': {
+                title: 'Mich Bot',
+                timeline: [
+                    'Started: January 2026',
+                    'Development: Jan - Feb 2026',
+                    'Current Status: In Development'
+                ],
+                team: ['Tzafrir'],
+                notes: 'Solo development by Tzafrir. Currently in active development.'
+            },
+            'aera': {
+                title: 'Aera',
+                timeline: [
+                    'Started: February 2026',
+                    'Development: Feb 2026',
+                    'Current Status: In Development'
+                ],
+                team: ['Miriam', 'Gal'],
+                notes: 'Started in February 2026. Currently in active development.'
+            },
+            'agentshap': {
+                title: 'AgentShap',
+                timeline: [
+                    'Started: December 2025',
+                    'Development: December 2025',
+                    'Release: January 2026',
+                    'Current Status: Completed'
+                ],
+                team: ['Miriam'],
+                notes: 'Development completed in December 2025. Successfully released in January 2026. Solo development by Miriam.'
+            }
+        };
+
+        // Show project details modal
+        function showProjectDetails(projectId) {
+            const modal = document.getElementById('projectModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+
+            const project = projectDetails[projectId];
+            if (!project) return;
+
+            modalTitle.textContent = project.title;
+
+            let bodyHTML = '';
+
+            if (project.timeline) {
+                bodyHTML += '<div class="modal-section"><h3>Timeline</h3><ul>';
+                project.timeline.forEach(item => {
+                    bodyHTML += `<li>${item}</li>`;
+                });
+                bodyHTML += '</ul></div>';
+            }
+
+            if (project.team) {
+                bodyHTML += '<div class="modal-section"><h3>Team</h3><p>' + project.team.join(', ') + '</p></div>';
+            }
+
+            if (project.notes) {
+                bodyHTML += '<div class="modal-section"><h3>Notes</h3><p style="font-weight: 700; font-size: 1.05rem;">' + project.notes + '</p></div>';
+            }
+
+            modalBody.innerHTML = bodyHTML;
+            modal.style.display = 'block';
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('projectModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('projectModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // View toggle functionality
+        const individualViewBtn = document.getElementById('individualView');
+        const combinedViewBtn = document.getElementById('combinedView');
+        const individualTimeline = document.getElementById('individualTimeline');
+        const combinedTimeline = document.getElementById('combinedTimeline');
+
+        individualViewBtn.addEventListener('click', () => {
+            individualTimeline.style.display = 'block';
+            combinedTimeline.style.display = 'none';
+            individualViewBtn.classList.add('active');
+            combinedViewBtn.classList.remove('active');
+        });
+
+        combinedViewBtn.addEventListener('click', () => {
+            individualTimeline.style.display = 'none';
+            combinedTimeline.style.display = 'block';
+            combinedViewBtn.classList.add('active');
+            individualViewBtn.classList.remove('active');
+        });
+
+        // Tab switching functionality
+        const projectsTabBtn = document.getElementById('projectsTab');
+        const ideasTabBtn = document.getElementById('ideasTab');
+        const projectsContent = document.getElementById('projectsContent');
+        const ideasContent = document.getElementById('ideasContent');
+
+        projectsTabBtn.addEventListener('click', () => {
+            projectsContent.classList.add('active');
+            ideasContent.classList.remove('active');
+            projectsTabBtn.classList.add('active');
+            ideasTabBtn.classList.remove('active');
+        });
+
+        ideasTabBtn.addEventListener('click', () => {
+            ideasContent.classList.add('active');
+            projectsContent.classList.remove('active');
+            ideasTabBtn.classList.add('active');
+            projectsTabBtn.classList.remove('active');
+        });
+
+        // Ideas data
+        const ideasDetails = {
+            'do-me-a-fiverr': {
+                title: 'Do Me a Fiverr',
+                status: 'Not Accepted',
+                description: 'A concept for a new service offering or feature that was pitched during the Labs ideation phase.',
+                reason: 'This idea was explored but ultimately not selected for development during this retrospective period.'
+            },
+            'fiverr-sales': {
+                title: 'Fiverr Sales',
+                status: 'Not Accepted',
+                description: 'A sales-focused initiative or tool designed to enhance the sales process or provide new sales capabilities.',
+                reason: 'While the concept showed promise, it was not prioritized for development in this cycle.'
+            },
+            'benchmark': {
+                title: 'Benchmark',
+                status: 'Not Accepted',
+                description: 'A benchmarking system or comparison tool to help measure and compare performance metrics.',
+                reason: 'The idea was explored during the pitching phase but not advanced to the development phase.'
+            }
+        };
+
+        // Show idea details modal
+        function showIdeaDetails(ideaId) {
+            const modal = document.getElementById('projectModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+
+            const idea = ideasDetails[ideaId];
+            if (!idea) return;
+
+            modalTitle.textContent = idea.title;
+
+            let bodyHTML = '<div class="modal-section"><h3>Status</h3><p>' + idea.status + '</p></div>';
+            bodyHTML += '<div class="modal-section"><h3>Description</h3><p>' + idea.description + '</p></div>';
+            bodyHTML += '<div class="modal-section"><h3>Outcome</h3><p>' + idea.reason + '</p></div>';
+
+            modalBody.innerHTML = bodyHTML;
+            modal.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
