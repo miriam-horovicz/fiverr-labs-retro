@@ -499,7 +499,7 @@
         /* Combined view project bars */
         .combined-timeline-grid {
             position: relative;
-            min-height: 400px;
+            min-height: 450px;
         }
 
         .combined-project-bar {
@@ -530,6 +530,7 @@
         .bar-mich-bot { background: linear-gradient(135deg, #a855f7, #9333ea); }
         .bar-aera { background: linear-gradient(135deg, #06b6d4, #0891b2); }
         .bar-agentshap { background: linear-gradient(135deg, #1dbf73, #19a463); }
+        .bar-tdad { background: linear-gradient(135deg, #fb923c, #f97316); }
 
         /* Legend */
         .phase-legend {
@@ -1000,11 +1001,11 @@
             </div>
             <div class="stat-card success">
                 <div class="stat-label">Completed</div>
-                <div class="stat-value">2</div>
+                <div class="stat-value">3</div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">Total Projects</div>
-                <div class="stat-value">10</div>
+                <div class="stat-value">11</div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">Team Members</div>
@@ -1561,6 +1562,38 @@
                         <div class="phase-track"></div>
                     </div>
                 </div>
+
+                <!-- Project 11: TDAD -->
+                <div class="project-row" data-status="completed" data-project="tdad" data-people="tzafrir">
+                    <div class="project-info">
+                        <div class="project-name">
+                            <strong onclick="showProjectDetails('tdad')">TDAD</strong>
+                            <span class="status-badge badge-completed">Completed</span>
+                        </div>
+                        <div class="project-team">
+                            <span class="team-label">Team</span>
+                            <div class="team-avatars">
+                                <div class="team-member-badge avatar-tzafrir">
+                                    <div class="avatar">TZ</div>
+                                    <span>Tzafrir</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-grid">
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track"></div>
+                        <div class="phase-track">
+                            <div class="phase phase-development phase-row-1" style="left: 0%; width: 100%;" onclick="showProjectDetails('tdad')">Development</div>
+                        </div>
+                        <div class="phase-track">
+                            <div class="phase phase-release phase-row-1" style="left: 0%; width: 100%;" onclick="showProjectDetails('tdad')">Release</div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Combined Timeline View -->
@@ -1579,7 +1612,7 @@
                 </div>
 
                 <!-- Combined View Row -->
-                <div class="project-row" style="min-height: 420px; align-items: stretch;">
+                <div class="project-row" style="min-height: 470px; align-items: stretch;">
                     <div class="project-info">
                         <div class="project-name">
                             <strong>Project Timelines</strong>
@@ -1621,6 +1654,9 @@
 
                         <!-- AgentShap: Dec - Jan (2 months) -->
                         <div class="combined-project-bar bar-agentshap" style="left: 57%; width: 29%; top: 370px;" onclick="showProjectDetails('agentshap')">AgentShap</div>
+
+                        <!-- TDAD: Jan - Feb (2 months) -->
+                        <div class="combined-project-bar bar-tdad" style="left: 71%; width: 29%; top: 410px;" onclick="showProjectDetails('tdad')">TDAD</div>
                     </div>
                 </div>
             </div>
@@ -1920,6 +1956,17 @@
                 ],
                 team: ['Miriam'],
                 notes: 'Development completed in December 2025. Successfully released in January 2026. Solo development by Miriam.'
+            },
+            'tdad': {
+                title: 'TDAD',
+                timeline: [
+                    'Started: January 2026',
+                    'Development: January 2026',
+                    'Release: February 2026',
+                    'Current Status: Completed'
+                ],
+                team: ['Tzafrir'],
+                notes: 'Research paper project. Development completed in January 2026. Successfully released in February 2026. Solo development by Tzafrir.'
             }
         };
 
