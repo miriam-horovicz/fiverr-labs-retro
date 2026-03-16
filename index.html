@@ -2093,6 +2093,7 @@
                 title: 'BossGPT',
                 author: 'Tzafrir',
                 status: 'Not Accepted',
+                presentedDate: 'Mid-August 2025',
                 description: 'AI-powered second brain and work management platform where teams manage projects, tasks, and knowledge through natural conversation, with MCP integration for seamless AI-agent collaboration.'
             }
         };
@@ -2108,9 +2109,15 @@
 
             modalTitle.textContent = idea.title;
 
-            let bodyHTML = '<div class="modal-section"><h3>Status</h3><p>' + idea.status + '</p></div>';
+            let bodyHTML = '';
+            if (idea.presentedDate) {
+                bodyHTML += '<div class="modal-section"><h3>Presented</h3><p>' + idea.presentedDate + '</p></div>';
+            }
+            bodyHTML += '<div class="modal-section"><h3>Status</h3><p>' + idea.status + '</p></div>';
             bodyHTML += '<div class="modal-section"><h3>Description</h3><p>' + idea.description + '</p></div>';
-            bodyHTML += '<div class="modal-section"><h3>Outcome</h3><p>' + idea.reason + '</p></div>';
+            if (idea.reason) {
+                bodyHTML += '<div class="modal-section"><h3>Outcome</h3><p>' + idea.reason + '</p></div>';
+            }
 
             modalBody.innerHTML = bodyHTML;
             modal.style.display = 'block';
